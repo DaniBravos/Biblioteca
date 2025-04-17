@@ -5,13 +5,14 @@ import com.example.biblioteca.service.LibroService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/libros")
@@ -21,13 +22,16 @@ public class LibroController {
     private LibroService libroService;
 
     @GetMapping
-    public List<Libro> geLibros(){
+    public List<Libro> getLibros(){
         return libroService.getLibros();
     }
 
-    @PostMapping
-    public Libro agregLibro(@RequestBody Libro libro){
-        return libroService.guardarLibro(libro);
+    @GetMapping("{id}")
+    public Libro getLibroPorId(@PathVariable int id){
+        return libroService.getLibroPorId(id);
     }
-
+    @GetMapping("/isbn/{isbn}")
+    public Libro getLibroPorIsbn(@PathVariable String isbn){
+        return libroService.getLibroPorIsbn(isbn);
+    }
 }
